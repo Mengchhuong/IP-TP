@@ -1,26 +1,59 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+<div>
+  <TodoItem @todo-deleted="deleteItem" :key="item.id" v-for="item in tasklist" :todo="item"></TodoItem>
+</div>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
+import TodoItem from './components/TodoItem'
 export default {
   name: 'App',
+  data() {
+    return {
+      tasklist: [
+        {
+          id: 1,
+          task: "Wash cloths",
+          state: "pending"
+        },
+        {
+          id: 2,
+          task: "Submit assignment",
+          state: "pending"
+        },
+        {
+          id: 3,
+          task: "Write user story",
+          state: "done"
+        },
+        {
+          id: 4,
+          task: "Read book",
+          state: "pending"
+        }
+      ],
+    }
+  },
   components: {
-    HelloWorld
+    TodoItem
+  },
+  methods:{
+    deleteItem(id){
+      let TaskList =[];
+      let item;
+      for (item of this.tasklist){
+        if(item.id!=id){
+          TaskList.push(item)
+        }
+      }
+      this.tasklist = TaskList;
+    },
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
